@@ -64,7 +64,7 @@
 //The MKS Servo42 uses the A1333_Encoder
 // Please uncomment this line and make sure the NEMA17_SMART_STEPPER_3_21_2017 is
 // uncommented for the Servo42
-//#define A1333_ENCODER
+#define A1333_ENCODER
 
 #ifdef A5995_DRIVER
 #ifdef NEMA17_SMART_STEPPER_3_21_2017
@@ -75,8 +75,9 @@
 #define NZS_FAST_CAL // define this to use 32k of flash for fast calibration table
 #define NZS_FAST_SINE //uses 2048 extra bytes to implement faster sine tables
 
-
+#if !defined(USE_A1333_ENCODER)
 #define NZS_AS5047_PIPELINE //does a pipeline read of encoder, which is slightly faster
+#endif
 
 #define NZS_CONTROL_LOOP_HZ (6000) //update rate of control loop
 
@@ -96,10 +97,10 @@
 
 //This section is for using the step and dir pins as serial port
 // when the enable pin is inactive.
-#ifndef MECHADUINO_HARDWARE
+//#ifndef MECHADUINO_HARDWARE
 #define USE_STEP_DIR_SERIAL
 #define STEP_DIR_BAUD (19200) //this is the baud rate we will use
-#endif
+//#endif
 
 
 // These are used as an attempt to use TC4 to count steps
@@ -253,6 +254,7 @@ typedef enum {
 #define SerialUSB Serial
 #endif 
 
+//MKS: doesn't have those lines
 #define PIN_TXD		(30)
 #define PIN_RXD		(31)
 
@@ -283,7 +285,9 @@ typedef enum {
 #define PIN_ENABLE	(10)
 #define PIN_ERROR	(3)
 
-#define PIN_VMOTOR (A1) //analog pin for the motor
+//MKS: this has changed
+//#define PIN_VMOTOR (A1) //analog pin for the motor  //mks 2018-03
+#define PIN_VMOTOR (A3) //analog pin for the motor
 
 #else
 #define PIN_SW1		(19)//analogInputToDigitalPin(PIN_A5))
